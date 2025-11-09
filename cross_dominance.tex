@@ -1,0 +1,296 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt, letterpaper]{article}
+
+% Preamble: Packages and document settings
+\usepackage{float}
+
+\usepackage{caption}
+\captionsetup{labelfont=bf, textfont=it}
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+
+\pdfoutput=1
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\theoremstyle{definition}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[normalem]{ulem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink]{cleveref}
+\usetikzlibrary{positioning}
+
+% Theorem setup
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+% Notation
+\newcommand{\uone}{u_1}
+\newcommand{\utwo}{u_2}
+\newcommand{\A}{A}
+\newcommand{\B}{B}
+\newcommand{\Y}{\mathcal{Y}} % opponent replies
+\newcommand{\WD}{\mathrm{WD}}
+\newcommand{\SD}{\mathrm{SD}}
+\newcommand{\PM}{\mathrm{PM}}
+\newcommand{\CD}{\mathrm{CD}}
+\newcommand{\CDstr}{\mathrm{CD}^{\mathrm{str}}}
+
+% Setup for hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=red,
+    pdftitle={Cross Dominance: A Shared-Interest Parallel to Strict Dominance},
+    pdfauthor={Shiko Kudo},
+}
+
+\begin{document}
+
+\title{Cross Dominance: \\ A Shared-Interest Parallel to Strict Dominance}
+\author{Shiko Kudo \\ National Taiwan University \\ \texttt{b12303095@ntu.edu.tw}}
+\date{November 9, 2025}
+\maketitle
+
+\begin{abstract}
+We describe \emph{cross dominance}—a bilateral strengthening of weak dominance: switching $\B\!\to\!\A$ is never worse for either player. Cross dominance is strictly stronger than weak dominance yet orthogonal to strict dominance; within the \emph{Pareto-monotone} slice we have $\SD\Rightarrow\CD\Rightarrow\WD$. This yields a shared-interest ladder (weak $\to$ cross $\to$ strict-cross) that runs in parallel to the classical self-interest ladder (weak $\to$ strict), offering a simple, outcome-agnostic rationale for pruning strategies like $\B$ in the motivating $2\times2$ game presented.
+\end{abstract}
+
+\section{Introduction}
+Consider the following simple 2-player game:
+
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & \textbf{0, 6} \\
+\textbf{B} & 1, 2    & 0, 4
+\end{tabular}
+\end{center}
+
+At first glance, strategy $B$ for Player 1 appears utterly pointless. Strategy $A$ weakly dominates $B$, giving Player 1 equal or better payoffs regardless of Player 2's choice. However at this point, properties of weakly dominating moves tell us that it might be possible still for this weakly dominated move to have some purpose, if we keep it and do IEDS.
+
+Upon closer inspection however, there is something more striking here that is not obvious on first glance: \textit{Player 2 is also strictly better off whenever Player 1 chooses $A$ over $B$, no matter which response Player 2 chooses.}
+
+Intuitively, this feels like it should be a slam-dunk case for elimination. And yet, the standard toolkit of game theory does not quite provide us with an answer that captures the unique reasoning this game seems to evoke:
+
+\begin{itemize}
+\item \textbf{Iterated Elimination of Strictly Dominated Strategies (IEDS)} refuses to touch it, as $A$ doesn't \textit{strictly} dominate $B$. This is caused by the tie when Player 2 plays $R$.
+
+\item \textbf{Iterated Elimination of Weakly Dominated Strategies (IEWDS)} will eliminate $B$; however IEWDS comes with caveats. First and foremost, it is order-dependent and can discard valid Nash equilibria reliant on weakly dominated strategies. This issue is discussed in depth in \cite{OsborneRubinstein1994}. Nevertheless, we are left wondering: is there something \textit{stronger} justifying this elimination beyond mere weak dominance?
+
+\item \textbf{Trembling Hand Perfect Equilibrium (THPE)} \cite{Selten1975} would also eliminate the $(B, R)$ equilibrium, but its rationale is one of robustness against mistakes and irrationality. That is not quite what is happening here. There is something fundamentally irrational about playing the move $B$ itself that is difficult to as yet articulate.
+\end{itemize}
+
+We are able to resolve this puzzle by considering the key components that define this game's mystery empirically:
+\begin{itemize}
+\item First, P1 prefers $A$ (or at least weakly prefers $A$).
+\item But second, and crucially, \textit{P2 also prefers that P1 plays A.}
+\item Therefore, a rational P1 should never play $B$, and a rational P2 should never \textit{expect} a rational P1 to play $B$. The strategy is pointless from every rational angle. It has no strategic value as a threat, a bluff, or a rational choice.
+\item Thus, both players have a \textit{\textbf{shared interest}} in P1 playing $A$ over $B$.
+\end{itemize}
+
+What should be present here is elimination justified not by self-interest alone, but by both players agreeing that $A$ is the right choice over $B$. A rational Player 2 should recognize that strategy $B$ is strictly worse for both of them in all circumstances. Why would Player 2 ever anticipate Player 1 playing a strategy that is both self-detrimental (due to weak dominance) \textit{and} mutually harmful (Pareto-worsening)?
+
+From the perspective of Player 1, if $A$ cross-dominates $B$, then a rational P1 never plays $B$, and a rational P2 never expects P1 to play $B$: for Player 1, the switch from playing move $B$ to $A$ is \textit{Pareto-safe}, as it never harms either player no matter how Player 2 responds.
+
+Here we formalize this intuition. We describe and formalize \textbf{cross dominance}, a concept that captures exactly this scenario, and show that it sits in a parallel ladder to the familiar strict dominance hierarchy. Where strict dominance represents ``elimination by self-interest,'' cross dominance represents ``elimination by shared interest.''
+
+\medskip
+\textbf{Principle (Pareto-safety):} A replacement $\B\to\A$ is \emph{Pareto-safe} if $\uone(\A,y)\ge\uone(\B,y)$ and $\utwo(\A,y)\ge\utwo(\B,y)$ for every reply $y$, with at least one strict inequality for P1. Pareto-safety underwrites \emph{cross dominance} ($\WD$ + $\PM$): elimination by \emph{shared interest}. Within the Pareto-safe slice we obtain the ladder $\SD\Rightarrow\CD\Rightarrow\WD$; globally, $\CD$ is orthogonal to $\SD$.
+
+\section{Setup}
+We study finite, two-player normal-form games with Player~1 (row) payoffs $\uone$ and Player~2 (column) payoffs $\utwo$. Let $\Y$ denote Player~2's set of pure responses. For Player~1's strategies $\A$ and $\B$, comparisons are taken pointwise in $y\in\Y$.
+
+\section{Definitions}
+\begin{definition}[Weak Dominance ($\WD$), Strict Dominance ($\SD$)]\label{def:wd-sd}
+$\A$ \emph{weakly dominates} $\B$ for Player~1 if $\uone(\A,y)\ge \uone(\B,y)$ for all $y\in\Y$ and $\uone(\A,y)>\uone(\B,y)$ for some $y$.\newline
+$\A$ \emph{strictly dominates} $\B$ for Player~1 if $\uone(\A,y)>\uone(\B,y)$ for all $y\in\Y$.
+\end{definition}
+
+\begin{definition}[Pareto-monotone ($\PM$)]\label{def:pm}
+The pair $(\A,\B)$, representing the replacement $B \to A$ is \emph{Pareto-monotone} for Player~2 if $\utwo(\A,y)\ge \utwo(\B,y)$ for all $y\in\Y$.
+\end{definition}
+
+\begin{definition}[Cross Dominance ($\CD$)]\label{def:cd}
+$\A$ \emph{cross-dominates} $\B$ (\emph{cross/Pareto-safe dominance}, denoted $\CD$) if $\WD$ holds and $(\A,\B)$ is $\PM$. In other words: $\CD$ = $\WD$ + $\PM$.
+\end{definition}
+
+\begin{definition}[Strict-Cross Dominance ($\CDstr$)]\label{def:cdstr}
+$\A$ \emph{strict-cross-dominates} $\B$ if $\SD$ holds and $(\A,\B)$ is $\PM$. In other words: $\CDstr$ = $\SD$ + $\PM$.
+\end{definition}
+
+\begin{remark}[Beliefs]
+Because the comparisons are pointwise, by linearity the relations extend to mixed responses: if an inequality holds for all pure $y$, it holds for all beliefs over $\Y$.
+\end{remark}
+
+\subsection{The Parallel Ladders}
+
+These definitions give rise to two parallel hierarchies:
+
+\begin{enumerate}
+\item \textbf{Self-Interest Ladder:} SD $\Rightarrow$ WD (as sets: SD $\subset$ WD)
+
+This is the classical dominance hierarchy. If a strategy is strictly better for Player 1 no matter what Player 2's move is, it must certainly also be weakly better than the alternative. The justification is purely from Player 1's perspective.
+
+\item \textbf{Shared-Interest Ladder:} CD$^{\text{str}}$ $\Rightarrow$ CD $\Rightarrow$ WD (as sets: CD$^{\text{str}}$ $\subset$ CD $\subset$ WD)
+
+If switching from $B$ to $A$ is strictly better for Player 1 while being harmless to Player 2 ($\CDstr$), then it must be so that switching from $B$ to $A$ must be by definition also weakly better for Player 1 while being harmless to Player 2 ($\CD$); and if switching from $B$ to $A$ is weakly better for Player 1 while being harmless to Player 2 ($\CD$), then it must be so that switching from $B$ to $A$ is by definition also weakly better for Player 1 ($\WD$).
+\end{enumerate}
+
+These ladders are \textit{parallel}, as one can be true while the other is not. Globally, CD and SD are \textbf{incomparable}---each contains cases the other misses.
+
+Consider our motivating example for instance, which already demonstrates one instance where $\CD$ holds but $\SD$ fails. Conversely, there are games where $\SD$ holds but $\CD$ fails, as we will see in \Cref{sec:examples}. Intuitively this occurs when Player~1 strictly prefers $\A$, but Player~2 loses at some response to that choice, violating $\PM$ and making it so that Player~2 does not always prefer Player~1 to play $\A$ over $\B$, but rather only sometimes (or never) prefers it when their own response can make use of it.
+
+Notably though, when we \textbf{condition on Pareto-monotonicity (the ``PM slice'')}, the ladders align: SD $\Rightarrow$ CD $\Rightarrow$ WD.
+
+\section{Basic relations}\label{sec:relations}
+\begin{proposition}[Cross dominance is strictly stronger than weak dominance]\label{prop:cd-stronger-than-wd}
+$\CD\Rightarrow\WD$, and the implication is strict: there are games with $\WD$ but not $\CD$.
+\end{proposition}
+\begin{proof}
+Immediate from \Cref{def:cd}. If for instance $\uone(\A,\mathrm{L})=2,\ \uone(\B,\mathrm{L})=1$ and $\uone(\A,\mathrm{R})=\uone(\B,\mathrm{R})=0$, $\WD$ holds; but if $\utwo(\A,\mathrm{L})=0<1=\utwo(\B,\mathrm{L})$ then $\PM$ fails, hence not $\CD$.
+\end{proof}
+
+\begin{proposition}[Global incomparability with strict dominance]\label{prop:incomparable}
+$\CD$ neither contains $\SD$ nor vice versa: $\CD\nsubseteq\SD$ and $\SD\nsubseteq\CD$.
+\end{proposition}
+\begin{proof}[Witnesses]
+(\emph{$\CD\nRightarrow\SD$}) Example~\ref{ex:one} below: ties for Player~1 block $\SD$, while $\PM$ holds, so $\CD$ also holds.
+\newline
+(\emph{$\SD\nRightarrow\CD$}) Example~\ref{ex:two} below: Player~1 strictly prefers $\A$, but Player~2 loses at some reply, violating $\PM$.
+\end{proof}
+
+\begin{proposition}[Inside the Pareto-monotone slice]\label{prop:inside-PM}
+Conditioned on $\PM$, we have $\SD\Rightarrow\CD\Rightarrow\WD$.
+\end{proposition}
+\begin{proof}
+If $\PM$ holds and $\SD$ holds which then implies $\WD$ also holding, then \Cref{def:cd} gives $\CD$. Trivially $\CD\Rightarrow\WD$.
+\end{proof}
+
+\paragraph{Parallel ladders.} The self-interest chain is $\SD\Rightarrow\WD$ (set-wise $\SD\subset\WD$). The shared-interest chain is $\CDstr\Rightarrow\CD\Rightarrow\WD$ (set-wise $\CDstr\subset\CD\subset\WD$). Globally, $\CD$ and $\SD$ are orthogonal per \Cref{prop:incomparable}.
+
+\section{Examples}\label{sec:examples}
+Payoffs are displayed as $(\uone,\utwo)$.
+
+\begin{example}[CD holds, SD fails]\label{ex:one}
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & \textbf{0, 6} \\
+\textbf{B} & 1, 2    & 0, 4
+\end{tabular}
+\end{center}
+For Player~1, $\A\ge \B$ pointwise with a strict improvement at L, and for Player~2, $\A\ge \B$ pointwise. Thus $\CD$ holds. However, the tie at $R$ prevents $\SD$.
+\end{example}
+
+\begin{example}[SD holds, CD fails]\label{ex:two}
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & \textbf{1, 3} \\
+\textbf{B} & 1, 2    & 0, 4
+\end{tabular}
+\end{center}
+Player~1 strictly prefers $\A$ everywhere ($\SD$), but at $R$ Player~2 has $3<4$, so $\PM$ fails and hence not $\CD$.
+\end{example}
+
+\begin{example}[Variant highlighting the belief issue]\label{ex:three}
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & \textbf{0, 4.5} \\
+\textbf{B} & 1, 2    & 0, 4
+\end{tabular}
+\end{center}
+As in Example~\ref{ex:one} but with $\utwo(\A,\mathrm{R})<\utwo(\A,\mathrm{L})$.
+\end{example}
+
+\section{The Rationality of Cross Dominance}
+
+Let's return to a slightly modified version of our motivating example, which should illuminate better what makes cross dominance compelling.
+
+\subsection{The Argument from Rationality}
+
+Consider Example~\ref{ex:three}:
+
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & \textbf{0, 4.5} \\
+\textbf{B} & 1, 2    & 0, 4
+\end{tabular}
+\end{center}
+
+This example is, in effect, a slightly modified version of Example~\ref{ex:one}. Notice that Player~2's payoffs have been adjusted so that $\utwo(\A,\mathrm{R})<\utwo(\A,\mathrm{L})$. The significance of this will become clear shortly.
+
+We will begin with finding pure Nash Equilibria using the standard best-response marking method.
+
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & $\mathbf{\underline{2}, \overline{5}}$    & $\underline{0}, 4.5$ \\
+\textbf{B} & $1, 2$    & $\mathbf{\underline{0}, \overline{4}}$
+\end{tabular}
+\end{center}
+
+We immediately find two pure Nash Equilibria this way: $(A, L)$ and $(B, R)$.
+
+But a question presents itself immediately: Is the $(B, R)$ equilibrium reasonable? A point can be made that it is an unreasonable solution:
+
+Firstly, the equilibrium relies on Player 1 being indifferent between $A$ and $B$ \textit{only if} Player 2 commits to playing $R$. However, consider the game from Player 2's perspective. A rational Player 2 should recognize that strategy $B$ is strictly worse in this case for both them and their opponent in all circumstances; in which case, why would Player 2 ever anticipate Player 1 playing a strategy that is both self-detrimental (due to WD) \textit{and} malicious (due to Pareto-worsening)?
+
+Therefore, the belief that "Player 1 will play B" is \textbf{not a reasonable belief for a rational Player 2 to hold.} Which brings us to the modified payoff $\utwo(\A,\mathrm{R})$ for Player 2. With the newly held belief that Player 1 will only ever play A, in Example~\ref{ex:three} it is clearly visible that Player 2 will thus play L at all times since in the reduced form game from Player 2's perspective:
+
+\begin{center}
+\begin{tabular}{c|cc}
+              & \textbf{L} & \textbf{R} \\ \hline
+\textbf{A} & 2, 5    & 0, 4.5 \\
+\sout{\textbf{B}} & \sout{1, 2}    & \sout{0, 4}
+\end{tabular}
+\end{center}
+
+This contradicts and undermines the $(B, R)$ equilibrium's core assumption that Player 2 will commit to $R$; thus, the stability of the equilibrium unravels.
+
+\section{Iterated cross elimination (ICE)}\label{sec:ice}
+One round of \emph{cross elimination} can be done by deleting any strategy $\B$ for which there exists an $\A$ with $\CD(\A,\B)$. We may then iterate to a reduced game. ICE is a stricter justification than IEWDS, and thus may eliminate fewer strategies. We leave order-independence of ICE open.
+
+\section{Conclusion}
+Cross dominance supplies a compact, justifiable principle for pruning strategies: \emph{elimination by shared interest}. It strictly strengthens weak dominance, is orthogonal to strict dominance, and aligns with refinement intuitions while remaining elementary.
+
+This concept benefits from a clear name as it identifies an unnamed axis in the elimination literature: not self-interest, not robustness to mistakes, but \textit{rational shared interest}. When both players agree a strategy is not beneficial, it can serve as an equally powerful justification for acknowledging its elimination, when traditional self-interest criteria might preserve it.
+
+% --- Bibliography ---
+\bibliographystyle{plain}
+\bibliography{references}
+
+\appendix
+\section{Mixed strategies lemma}
+\begin{lemma}[Extension to mixed strategies]\label{lemma:mixed-strategies}
+We state inequalities pointwise in the opponent's pure replies; by linearity they extend to all beliefs (mixed strategies).
+If $\uone(\A,y)\ge \uone(\B,y)$ for all pure $y$, then for every belief $\sigma$ over $\Y$, $\mathbb{E}_{y\sim\sigma}[\uone(\A,y)]\ge \mathbb{E}_{y\sim\sigma}[\uone(\B,y)]$, and the same can be said for $\utwo$.
+\end{lemma}
+
+\section{THP lemma}
+\begin{lemma}[Why $(B,R)$ isn't THP in Ex. \ref{ex:one}/\ref{ex:three}]\label{lemma:thp-ex-1-3}
+For any mixed $\sigma_2$ with $\sigma_2(L)>0$, Player 1's expected payoff from $A$ exceeds that from $B$ (since $u_1(A,L)>u_1(B,L)$ and $u_1(A,R)=u_1(B,R)$). Thus $B$ is not a best response to any such perturbation; hence $(B,R)$ is not trembling-hand perfect.
+\end{lemma}
+
+\section{List of all definitions for reference}
+\textbf{Weak dominance (WD):} $(u_1(A,y)\ge u_1(B,y))$ $\forall y$, and $(>)$ for some $y$.\medskip\newline
+\textbf{Strict dominance (SD):} $(u_1(A,y)>u_1(B,y))$ $\forall y$.\medskip\newline
+\textbf{Pareto-monotone (PM)} (``Harmless to P2 from P1 switching''): $(u_2(A,y)\ge u_2(B,y))$ $\forall y$.\medskip\newline
+\textbf{Cross dominance (CD)} (``A win-win situation implies rational pruning''): WD + PM.\medskip\newline
+\textbf{Strict-cross ($\mathrm{CD}^{\text{str}}$):} SD + PM.
+\medskip\medskip\newline
+\textbf{Self-interest ladder:} $\SD \Rightarrow \WD$ (sets: $\SD \subset \WD$).\medskip\newline
+\textbf{Shared-interest ladder:} $\CDstr \Rightarrow \CD \Rightarrow \WD$ (sets: $\CDstr \subset \CD \subset \WD$).\medskip\newline
+\textbf{Global relation:} $\CD \not\subset \SD$ and $\SD \not\subset \CD$.\medskip\newline
+\textbf{Within the PM slice:} $\SD \Rightarrow \CD \Rightarrow \WD$.
+
+\end{document}
