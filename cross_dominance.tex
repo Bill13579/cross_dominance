@@ -257,6 +257,18 @@ Therefore, the belief that "Player 1 will play B" is \textbf{not a reasonable be
 
 This contradicts and undermines the $(B, R)$ equilibrium's core assumption that Player 2 will commit to $R$; thus, the stability of the equilibrium unravels.
 
+\section{Dead Weight in the Game Tree}\label{sec:dead-weight}
+
+When the conditions of WD + PM are met, the dominated strategy $\B$ is in essence dead-weight in the game tree.
+
+Game-theoretic reasoning arises when there is strategic tension. One move by Player A might make them better off, but at the cost of making Player B worse off; and vice versa. Without this tension, there is no Game Theory.
+
+But Cross Dominated moves have no such strategic tension.
+
+Crucially, there is no need to even invoke repeated games (as is the case for punishment/reward strategies in games with multiple rounds) or welfare maximization on both sides to justify their elimination. Unlike repeated games, there is no need for the potential for future payoff changes to justify the elimination of Cross Dominated moves. Unlike welfare optimization, there is no tension of common welfare vs individual interest for Cross Dominated moves to debate on its removal. With the simplest, most fundamentally shaved-down one-shot games, with pure-self-interested players, Cross Dominated moves are already pointless strategically. There "is a more interesting game to be played" that has a fundamentally higher "range" (as in, potential payoff output) of potential higher outcomes for both players when it is pruned (conceptually, lifting the minimum of payoff range for both players up higher). This is why it is close to dominance. Dominance is fundamentally erasing moves that isolate the strategically interesting parts of the game tree. Cross Dominance allows us to do the same, one step further.
+
+The language of shared-interest is useful to describe \textit{the lack of strategic tension} of these moves in this way, but it is easy to misinterpret it due to how it is used usually, which is why this section has been included for clarification.
+
 \section{Iterated cross elimination (ICE)}\label{sec:ice}
 One round of \emph{cross elimination} can be done by deleting any strategy $\B$ for which there exists an $\A$ with $\CD(\A,\B)$. We may then iterate to a reduced game. ICE is a stricter justification than IEWDS, and thus may eliminate fewer strategies. We leave order-independence of ICE open.
 
